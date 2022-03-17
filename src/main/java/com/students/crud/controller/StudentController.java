@@ -37,7 +37,7 @@ public class StudentController {
 	public String saveStudent(@ModelAttribute("student") Student student) {
 		studentService.save(student);
 		
-		return "redirect:/students.html";
+		return "redirect:/students";
 	}
 	
 	@GetMapping("/edit/{id}")
@@ -56,13 +56,13 @@ public class StudentController {
 			studentService.update(studentExists);
 		}
 		
-		return "redirect:/students.html";
+		return "redirect:/students";
 	}
 	
 	@GetMapping("/delete/{id}")
 	public String deleteStudent(@PathVariable("id") Long id) {
 		studentService.delete(id);
 		
-		return "redirect:/students.html";
+		return "redirect:/students";
 	}
 }
