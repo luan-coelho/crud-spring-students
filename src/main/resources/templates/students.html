@@ -1,6 +1,6 @@
 <!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+	xmlns:th="http://www.thymeleaf.org">
 
 <head>
 <title>Alunos</title>
@@ -15,11 +15,10 @@
 </head>
 
 <body>
-
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	<nav
+		class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-sm-around">
 		<h1 class="navbar-brand">Gestão de Alunos</h1>
 	</nav>
-
 	<div class="container">
 		<div class="row">
 			<h2 class="mt-3">Relação de Alunos</h2>
@@ -48,9 +47,10 @@
 					<th th:text="${student.surname}" scope="row"></th>
 					<th th:text="${student.email}" scope="row"></th>
 					<th th:text="${student.password}" scope="row"></th>
-					<th>
-						<a class="btn btn-primary" th:href="@{/students/edit/{id} (id=${student.id})}">Editar</a>
-						<a class="btn btn-danger" th:href="@{/students/delete/{id} (id=${student.id})}">Excluir</a>
+					<th><a class="btn btn-primary"
+						th:href="@{/students/edit/{id} (id=${student.id})}">Editar</a> <a
+						class="btn btn-danger"
+						th:href="@{/students/delete/{id} (id=${student.id})}">Excluir</a>
 					</th>
 				</tr>
 			</tbody>

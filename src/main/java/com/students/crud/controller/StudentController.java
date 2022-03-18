@@ -1,5 +1,7 @@
 package com.students.crud.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,51 +20,51 @@ public class StudentController {
 
 	@Autowired
 	private StudentService studentService;
-	
+
 	@GetMapping
 	public String findAll(Model model) {
 		model.addAttribute("students", studentService.findAll());
-		
+
 		return "students.html";
 	}
-	
+
 	@GetMapping("/register")
 	public String registerStudent(Model model) {
 		model.addAttribute("student", new Student());
-		
+
 		return "register-student.html";
 	}
-	
+
 	@PostMapping
-	public String saveStudent(@ModelAttribute("student") Student student) {
+	public String saveStudent(@ModelAttribute("student") @Valid Student student) {
 		studentService.save(student);
-		
+
 		return "redirect:/students";
 	}
-	
+
 	@GetMapping("/edit/{id}")
 	public String editStudent(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("student", studentService.findById(id));
-		
+
 		return "edit-student.html";
 	}
-	
+
 	@PostMapping("/{id}")
-	public String updateStudent(@PathVariable("id") Long id, @ModelAttribute("student") Student student ,Model model) {
+	public String updateStudent(@PathVariable("id") Long id, @ModelAttribute("student") Student student, Model model) {
 		Student studentExists = studentService.findById(id);
-		
-		if(studentExists != null) {
+
+		if (studentExists != null) {
 			studentExists = student;
 			studentService.update(studentExists);
 		}
-		
+
 		return "redirect:/students";
 	}
-	
+
 	@GetMapping("/delete/{id}")
 	public String deleteStudent(@PathVariable("id") Long id) {
 		studentService.delete(id);
-		
+
 		return "redirect:/students";
 	}
 }
