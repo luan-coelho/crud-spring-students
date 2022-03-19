@@ -1,5 +1,7 @@
 package com.students.crud.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +25,11 @@ public class StudentController {
 
 	@GetMapping
 	public String findAll(Model model) {
-		model.addAttribute("students", studentService.findAll());
+		
+		List <Student> students = studentService.findAll();
+		students.forEach(student -> student.setPassword(student.getPassword().replaceAll(".", "*")));
+				
+		model.addAttribute("students", students);
 
 		return "students.html";
 	}
@@ -44,17 +50,34 @@ public class StudentController {
 
 	@GetMapping("/edit/{id}")
 	public String editStudent(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("student", studentService.findById(id));
-
+				
+		Student student = null;
+		
+		try {
+			student = studentService.findById(id);
+		} catch (Exception e) {
+			return "redirect:/students";
+		}
+		
+		model.addAttribute("student", student);
 		return "edit-student.html";
 	}
 
 	@PostMapping("/{id}")
-	public String updateStudent(@PathVariable("id") Long id, @ModelAttribute("student") Student student, Model model) {
-		Student studentExists = studentService.findById(id);
+	public String updateStudent(@PathVariable("id") Long id, @ModelAttribute("student") Student student,
+			Model model){
+		
+			Student studentExists = null;
+			try {
+				studentExists = studentService.findById(id);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 
 		if (studentExists != null) {
+			String password = studentExists.getPassword();
 			studentExists = student;
+			studentExists.setPassword(password);
 			studentService.update(studentExists);
 		}
 

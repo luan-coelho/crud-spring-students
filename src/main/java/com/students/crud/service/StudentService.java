@@ -18,7 +18,7 @@ public class StudentService {
 		return repository.findAll();
 	}
 
-	public Student findById(Long id) {
+	public Student findById(Long id) throws Exception {
 		return repository.findById(id).get();
 	}
 	

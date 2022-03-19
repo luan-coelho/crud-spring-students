@@ -9,6 +9,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,20 +22,26 @@ public class Student {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_student")
 	private Long id;
-	
+
 	@NotBlank(message = "Preencha o nome")
 	@Column(nullable = false)
 	private String name;
-	
+
 	@NotBlank(message = "Preencha o sobrenome")
 	@Column(nullable = false)
 	private String surname;
-	
+
 	@Email(message = "Informe um email válido")
 	@Column(nullable = false)
 	private String email;
-	
+
+	@Getter(value = AccessLevel.NONE)
 	@NotBlank(message = "Informe uma senha")
 	@Column(nullable = false)
 	private String password;
+
+	public String getPassword() {
+		
+		return password;
+	}
 }
